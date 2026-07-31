@@ -6,6 +6,16 @@
  [ถ้ากดเข้าลิ้งก์ไม่ได้ให้คัดลอกไปวางใน ช่องค้นหาแทนนะครับ]
  
 <img width="1882" height="898" alt="image" src="https://github.com/user-attachments/assets/3a66d989-29aa-421e-bafc-6f198f766f5f" />
+[นี้คือหน้าเว็บแนะนำWep app]
+<img width="1894" height="910" alt="image" src="https://github.com/user-attachments/assets/efdd4999-fdb0-42db-b9de-73844a5a6f50" />
+[ส่วนนี้คือหน้าแอพHublex ครับ]
+<img width="862" height="380" alt="image" src="https://github.com/user-attachments/assets/f1232b41-a52a-41c5-bc75-f1c6c05f0b8c" />
+[ผมได้ทำการเพิ่มระบบล็อกอินด้วยgoogle เข้าไปเพื่อทำการซิงค์ข้อมูลกับเครื่องอื่นๆของผู้ใช้งาน]
+
+
+ถ้าเกิดสงสัยอะไรให้ทักมาสอบถามผมได้เลยหรือมีข้อเสนอแนะอะไรให้ติดต่อมาได้เลยครับ 
+gmail: najimakenji854@gmail.com
+
 ทำอะไรได้บ้าง
 เพิ่ม/แก้/ลบ/ติ๊กงานเสร็จ จัดหมวดหมู่ ตั้งวันที่-เวลาได้
 ล็อกอินแล้วข้อมูลซิงค์ข้ามเครื่องได้ (ใช้ Firestore)
