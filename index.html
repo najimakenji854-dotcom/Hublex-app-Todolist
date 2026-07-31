@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hublex - Focus Yourself. Organize Your Life.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js สำหรับสร้าง 3D GUI -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        html, body {
+            background-color: #030712 !important;
+            color: #f3f4f6 !important;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Sarabun', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 3D Canvas Background */
+        #webgl-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glass-card-3d {
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        .glass-card-3d:hover {
+            border-color: rgba(129, 140, 248, 0.6);
+            transform: translateY(-8px) rotateX(4deg) rotateY(-2deg);
+            box-shadow: 0 40px 80px -15px rgba(99, 102, 241, 0.35);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-3d {
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn-3d:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 25px 45px -5px rgba(99, 102, 241, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+        }
+
+        .btn-3d:active {
+            transform: translateY(1px) scale(0.98);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <!-- 3D Canvas Background -->
+    <canvas id="webgl-bg"></canvas>
+
+    <div class="relative z-10">
+        
+        <!-- Navbar -->
+        <header class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center border-b border-white/10 backdrop-blur-md">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center font-extrabold text-white shadow-lg shadow-indigo-500/40">H</div>
+                <span class="text-2xl font-black tracking-widest text-white">HUBLEX <span class="text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">3D GUI</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm text-slate-300 font-semibold tracking-wide">
+                <a href="#features" class="hover:text-indigo-400 transition-colors">FEATURES</a>
+                <a href="#highlights" class="hover:text-indigo-400 transition-colors">HIGHLIGHTS</a>
+                <a href="#faq" class="hover:text-indigo-400 transition-colors">FAQ</a>
+                <a href="#feedback" class="hover:text-indigo-400 transition-colors">FEEDBACK</a>
+                <a href="#developer" class="hover:text-indigo-400 transition-colors">DEVELOPER</a>
+            </nav>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="max-w-5xl mx-auto text-center px-6 pt-28 pb-24">
+            <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-card-3d text-xs font-bold tracking-wider text-indigo-300 mb-8 border border-indigo-500/40">
+                <span class="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-ping"></span>
+                THE NEXT-GEN 3D PRODUCTIVITY EXPERIENCE
+            </div>
+
+            <h1 class="text-7xl md:text-9xl font-black text-gradient tracking-tight mb-6 leading-none drop-shadow-2xl">
+                Hublex
+            </h1>
+            
+            <p class="text-2xl md:text-4xl font-light text-slate-200 mb-8 tracking-wide">
+                Focus Yourself. <span class="text-gradient-purple font-extrabold">Organize Your Life.</span>
+            </p>
+
+            <p class="text-slate-300 max-w-2xl mx-auto mb-12 text-base md:text-xl leading-relaxed font-light">
+                ยกระดับการจัดการชีวิตและเป้าหมายด้วยอินเทอร์เฟซมิติใหม่ ลื่นไหล ปลอดภัย และเชื่อมโยงทุกความคิดของคุณไว้ในที่เดียว
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <!-- ลิงก์ตรงไปหน้าเว็บแอปจริง -->
+                <a href="https://hublex-youself.netlify.app/" target="_blank" class="btn-3d bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold px-10 py-5 rounded-2xl transition-all flex items-center justify-center gap-3 text-lg">
+                    <span>🚀 Launch Web App</span>
+                </a>
+                
+                <button onclick="alert('Android Application กำลังอยู่ในขั้นตอนการพัฒนาอย่างปราณีต และจะเปิดให้ดาวน์โหลดบน Google Play Store เร็วๆ นี้ครับ!')" class="glass-card-3d text-slate-200 font-bold px-10 py-5 rounded-2xl transition-all flex items-center justify-center gap-3 hover:bg-white/10 text-lg">
+                    <span>📱 Android Application</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- FEATURES SECTION -->
+        <section id="features" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <h2 class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-3">Capabilities</h2>
+                <p class="text-4xl font-extrabold text-white">ทุกสิ่งที่คุณต้องการ เพื่อโฟกัสสิ่งที่สำคัญ</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glass-card-3d p-8 rounded-3xl relative overflow-hidden">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 mb-6 text-2xl shadow-inner">🤖</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">AI Assistant</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">ผู้ช่วยอัจฉริยะที่ช่วยวิเคราะห์และจัดลำดับความสำคัญของงานให้อัตโนมัติ</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl relative overflow-hidden">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400 mb-6 text-2xl shadow-inner">✅</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Todo List</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">จัดการรายการสิ่งที่ต้องทำด้วยดีไซน์เรียบหรู ใช้งานง่าย และไม่ซับซ้อน</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl relative overflow-hidden">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center text-sky-400 mb-6 text-2xl shadow-inner">📅</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Daily Planner</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">วางแผนตารางเวลาอย่างเป็นระบบ ให้คุณมีเวลาเหลือสำหรับชีวิตส่วนตัว</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl relative overflow-hidden">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 mb-6 text-2xl shadow-inner">🔔</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Reminder</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">ระบบแจ้งเตือนที่ตรงเวลา แม่นยำ ไม่พลาดทุกกำหนดการสำคัญ</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl relative overflow-hidden md:col-span-2">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 mb-6 text-2xl shadow-inner">⚡</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Offline PWA Supported</h3>
+                    <p class="text-slate-300 text-sm leading-relaxed font-light">เทคโนโลยี Progressive Web App ติดตั้งลงเครื่องได้ทันที รองรับการทำงานแบบออฟไลน์ 100% โดยไม่ต้องพึ่งพาอินเทอร์เน็ตตลอดเวลา</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- HIGHLIGHTS SECTION -->
+        <section id="highlights" class="max-w-7xl mx-auto px-6 py-28 border-t border-white/10">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <h2 class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-3">Why Choose Hublex</h2>
+                <p class="text-4xl font-extrabold text-white">ออกแบบเพื่อประสิทธิภาพและความเป็นที่สุด</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card-3d p-8 rounded-3xl text-center">
+                    <div class="text-5xl font-black text-indigo-400 mb-2 drop-shadow-lg">100%</div>
+                    <h4 class="text-xl font-bold text-white mb-2">Privacy First</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed font-light">ข้อมูลทั้งหมดเก็บอย่างปลอดภัยบนเครื่องของคุณ ไม่มีการนำไปแชร์ต่อ</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl text-center">
+                    <div class="text-5xl font-black text-purple-400 mb-2 drop-shadow-lg">0.1s</div>
+                    <h4 class="text-xl font-bold text-white mb-2">Ultra Fast</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed font-light">โหลดเร็ว เบา ไม่หน่วง ตอบสนองทันทีทุกการกดใช้งาน</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl text-center">
+                    <div class="text-5xl font-black text-sky-400 mb-2 drop-shadow-lg">Zero</div>
+                    <h4 class="text-xl font-bold text-white mb-2">Distractions</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed font-light">ไม่มีโฆษณาคอยรบกวนความตั้งใจ ให้คุณโฟกัสกับงานตรงหน้าได้อย่างเต็มที่</p>
+                </div>
+
+                <div class="glass-card-3d p-8 rounded-3xl text-center">
+                    <div class="text-5xl font-black text-emerald-400 mb-2 drop-shadow-lg">PWA</div>
+                    <h4 class="text-xl font-bold text-white mb-2">Cross Platform</h4>
+                    <p class="text-slate-300 text-xs leading-relaxed font-light">รองรับการใช้งานทุกอุปกรณ์ ทั้งมือถือ แท็บเล็ต และคอมพิวเตอร์</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="max-w-4xl mx-auto px-6 py-28 border-t border-white/10">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-3">FAQ</h2>
+                <p class="text-4xl font-extrabold text-white">คำถามที่พบบ่อย</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-card-3d p-6 rounded-2xl">
+                    <h4 class="text-lg font-bold text-white mb-2">💰 Hublex ใช้งานฟรีหรือไม่?</h4>
+                    <p class="text-slate-300 text-sm font-light leading-relaxed">เปิดให้ใช้งานฟีเจอร์พื้นฐานทั้งหมดฟรี 100% โดยไม่มีโฆษณากวนใจครับ</p>
+                </div>
+
+                <div class="glass-card-3d p-6 rounded-2xl">
+                    <h4 class="text-lg font-bold text-white mb-2">🔒 ข้อมูลของฉันถูกเก็บบันทึกไว้ที่ไหน?</h4>
+                    <p class="text-slate-300 text-sm font-light leading-relaxed">เรายึดหลัก Privacy First ข้อมูลของคุณจะถูกประมวลผลและเก็บบันทึกไว้ในเครื่องของคุณเอง (Local Storage) ทำให้มีความปลอดภัยสูงสุด</p>
+                </div>
+
+                <div class="glass-card-3d p-6 rounded-2xl">
+                    <h4 class="text-lg font-bold text-white mb-2">📲 ติดตั้งแอปบนมือถือยังไง?</h4>
+                    <p class="text-slate-300 text-sm font-light leading-relaxed">เมื่อเปิดเว็บแอปบนเบราว์เซอร์มือถือ (Chrome/Safari) สามารถกดปุ่ม "Add to Home Screen" หรือ "ติดตั้งแอป" เพื่อใช้งานเสมือนแอปจริงได้ทันทีครับ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEEDBACK SECTION -->
+        <section id="feedback" class="max-w-4xl mx-auto px-6 py-28 border-t border-white/10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-3">Community Voices</h2>
+                <p class="text-4xl font-extrabold text-white">ข้อเสนอแนะของคุณมีค่าเสมอ</p>
+                <p class="text-slate-300 text-sm font-light mt-3">ช่วยเราพัฒนา Hublex ให้ดียิ่งขึ้น ด้วยการส่งความคิดเห็นหรือฟีเจอร์ที่คุณอยากเห็น</p>
+            </div>
+
+            <div class="glass-card-3d p-8 md:p-10 rounded-3xl">
+                <form onsubmit="sendFeedback(event)" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-300 tracking-wider mb-2">ข้อเสนอแนะ / ความคิดเห็นของคุณ</label>
+                        <textarea id="feedbackText" rows="4" required placeholder="บอกเล่าความรู้สึก หรือฟีเจอร์ที่คุณอยากให้เพิ่มใน Hublex..." class="w-full bg-slate-900/90 border border-white/20 rounded-2xl p-4 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all font-light text-sm resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="btn-3d w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold py-4 rounded-2xl transition-all">
+                        💬 ส่งข้อเสนอแนะ (Send Feedback)
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- DEVELOPER SECTION -->
+        <section id="developer" class="max-w-4xl mx-auto px-6 py-28 border-t border-white/10">
+            <div class="glass-card-3d p-10 md:p-14 rounded-3xl text-center relative overflow-hidden">
+                <div class="w-24 h-24 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 mx-auto mb-6 p-1 shadow-2xl shadow-indigo-500/50">
+                    <div class="w-full h-full rounded-full bg-slate-950 flex items-center justify-center text-4xl">
+                        👨‍💻
+                    </div>
+                </div>
+                <h3 class="text-3xl font-bold text-white mb-2">Hublex Creator</h3>
+                <p class="text-xs font-bold tracking-widest text-indigo-400 uppercase mb-6">Independent Developer</p>
+                <p class="text-slate-300 max-w-xl mx-auto text-sm md:text-base leading-relaxed font-light">
+                    มุ่งมั่นสร้างสรรค์ซอฟต์แวร์ที่ผสมผสานระหว่างประสิทธิภาพที่ยอดเยี่ยมและความงดงามทางดีไซน์ เพื่อมอบเครื่องมือที่ช่วยให้ทุกคนดึงศักยภาพสูงสุดของตัวเองออกมา
+                </p>
+            </div>
+        </section>
+
+        <!-- FOOTER & CONTACT -->
+        <footer class="max-w-7xl mx-auto px-6 py-12 border-t border-white/10 text-center">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 text-sm text-slate-300 font-light">
+                <div>
+                    <span class="text-white font-bold">Contact & Support:</span> ติดต่อสอบถามหรือแจ้งปัญหา
+                </div>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="mailto:Najimakenji854@gmail.com" class="hover:text-indigo-400 transition-colors flex items-center gap-2">
+                        <span>✉️ Email:</span> <span class="text-slate-100 font-semibold">Najimakenji854@gmail.com</span>
+                    </a>
+                    <a href="https://line.me/ti/p/~kuro0611310769" target="_blank" class="hover:text-emerald-400 transition-colors flex items-center gap-2">
+                        <span>💬 Line:</span> <span class="text-slate-100 font-semibold">kuro0611310769</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-slate-500 text-xs tracking-wider border-t border-white/10 pt-8">
+                © HUBLEX 3D GUI. CRAFTED WITH PASSION & QUANTUM DESIGN.
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- 3D ENGINE SCRIPT (Three.js Engine) -->
+    <script>
+        // Setup Scene, Camera, Renderer
+        const canvas = document.getElementById('webgl-bg');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // 1. Create 3D Quantum Core Mesh (Icosahedron)
+        const geometry = new THREE.IcosahedronGeometry(2.2, 2);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x6366f1,
+            wireframe: true,
+            emissive: 0x4f46e5,
+            emissiveIntensity: 0.5
+        });
+        const coreSphere = new THREE.Mesh(geometry, material);
+        scene.add(coreSphere);
+
+        // Inner Glowing Sphere
+        const innerGeo = new THREE.SphereGeometry(1.4, 32, 32);
+        const innerMat = new THREE.MeshBasicMaterial({ color: 0xa855f7, transparent: true, opacity: 0.6 });
+        const innerSphere = new THREE.Mesh(innerGeo, innerMat);
+        scene.add(innerSphere);
+
+        // 2. Create Floating Particles Field
+        const particlesGeo = new THREE.BufferGeometry();
+        const particlesCount = 700;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 20;
+        }
+
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMat = new THREE.PointsMaterial({
+            size: 0.035,
+            color: 0x818cf8,
+            transparent: true,
+            opacity: 0.8
+        });
+        const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particlesMesh);
+
+        // 3. Lighting
+        const pointLight = new THREE.PointLight(0xa855f7, 2, 100);
+        pointLight.position.set(5, 5, 5);
+        scene.add(pointLight);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        camera.position.z = 6;
+
+        // Mouse Interaction
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        // Animation Loop
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+
+            // Rotate 3D Core
+            coreSphere.rotation.x = elapsedTime * 0.15;
+            coreSphere.rotation.y = elapsedTime * 0.2;
+
+            innerSphere.rotation.x = -elapsedTime * 0.1;
+            innerSphere.rotation.y = -elapsedTime * 0.15;
+
+            particlesMesh.rotation.y = elapsedTime * 0.03;
+
+            // Parallax mouse movement
+            camera.position.x += (mouseX * 1.5 - camera.position.x) * 0.05;
+            camera.position.y += (-mouseY * 1.5 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsive Resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Feedback Mail Script
+        function sendFeedback(event) {
+            event.preventDefault();
+            const text = document.getElementById('feedbackText').value;
+            const mailtoLink = `mailto:Najimakenji854@gmail.com?subject=Hublex 3D Feedback&body=${encodeURIComponent(text)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
