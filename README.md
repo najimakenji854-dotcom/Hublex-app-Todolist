@@ -10,6 +10,7 @@
 <img width="1894" height="910" alt="image" src="https://github.com/user-attachments/assets/efdd4999-fdb0-42db-b9de-73844a5a6f50" />
 [ส่วนนี้คือหน้าแอพHublex ครับ]
 <img width="862" height="380" alt="image" src="https://github.com/user-attachments/assets/f1232b41-a52a-41c5-bc75-f1c6c05f0b8c" />
+
 [ผมได้ทำการเพิ่มระบบล็อกอินด้วยgoogle เข้าไปเพื่อทำการซิงค์ข้อมูลกับเครื่องอื่นๆของผู้ใช้งาน]
 
 
