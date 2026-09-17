@@ -1,7 +1,7 @@
 # Hublex-app-Todolistงานของฉัน — แอปทูดูลิสต์ที่มีผู้ช่วย AI
 โปรเจกต์ส่วนตัวของผม เป็นแอปจดงานที่จ้ำจี้จ้ำไชตัวเองให้ทำงานตามที่ตั้งใจไว้ ทำเป็น PWA (เปิดจากเบราว์เซอร์แล้วติดตั้งลงมือถือได้เหมือนแอปจริง) แล้วก็แอบใส่ผู้ช่วย AI เข้าไปด้วยเพราะอยากลองเล่นกับ Gemini API ดู
 
-ลองใช้งานจริงได้ที่: https://hublex-appyouself.netlify.app/?fbclid=IwY2xjawTZeMRleHRuA2FlbQIxMABicmlkETFad2ZXTU1xc0pqTkNFVXd3c3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHgKVdRp-HjB3MNcYAbEWIqGS_gYJqDvOX_ySxYBTNTxLNnJt2EtpCgwffy3q_aem_a5Ozxy5oayKDujdnUrnWJw
+ลองใช้งานจริงได้ที่: https://hublexforself.netlify.app/
 
  [ถ้ากดเข้าลิ้งก์ไม่ได้ให้คัดลอกไปวางใน ช่องค้นหาแทนนะครับ]
  
